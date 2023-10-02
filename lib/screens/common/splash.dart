@@ -1,15 +1,21 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:threeclick/custom/navigation.dart';
+import 'package:threeclick/screens/common/welcome/welcome_screen.dart';
 import 'dart:async';
+
+import 'package:threeclick/view_models/common/login_provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _MyHomePageState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
@@ -52,10 +58,13 @@ class _MyHomePageState extends State<SplashScreen> {
 
   Future<void> NavigatorPage() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool? isLogging = prefs.getBool("isLogging");
+    var provider=LoginProvider(await SharedPreferences.getInstance());
+    bool isLogging = prefs.getBool("isLogging")??false;
     String? role = prefs.getString("role")?.toLowerCase();
-    if (isLogging == null || role == null) {
+    if (provider.isUserLoggedIn) {
+      navigateReplaceMent(context: context, to: const WelcomeScreen());
       // Navigator.pushReplacement(
+
       //   context,
       //   MaterialPageRoute(
       //     builder: (context) {
