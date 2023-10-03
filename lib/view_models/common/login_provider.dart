@@ -51,19 +51,17 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
   }
 
- 
-
-  Future<bool> loginApp(Map<String, dynamic> body,
+  Future<bool> login(Map<String, dynamic> body,
       {Map<String, String>? headers, required BuildContext context}) async {
     _setShowLoader(true);
     try {
       var result = await ApiClient.postApi(
-          body: body,
-          context: context,
-          url: appUrls.loginUrl,
-          headers: headers);
-
-      var loginData = LoginDataModel.fromJson(result.data);
+        body: body,
+        context: context,
+        url: appUrls.loginUrl,
+        headers: headers,
+      );
+      var loginData = LoginDataModel.fromJson(result);
       _preferences.setString("token", loginData.response?.token ?? "");
 
       _preferences.setString("userDetails", jsonEncode(loginData));
@@ -75,7 +73,7 @@ class LoginProvider extends ChangeNotifier {
       return true;
     } catch (e) {
       if (e is ServerError) {
-        showToast(e.message.toString());
+        showToast(e.message['response']['message'].toString());
         _setShowLoader(false);
         notifyListeners();
         return false;
@@ -110,5 +108,27 @@ class LoginProvider extends ChangeNotifier {
     return false;
   }
 
-  
+  Future<bool> forgotPassword(
+      {required BuildContext context,
+      required Map<String, dynamic> body}) async {
+    _setShowLoader(true);
+    try {
+      var res = await ApiClient.postApi(
+          context: context, url: appUrls.forgotPasswordUrl, body: body);
+      showToast(res['message'], isSuccess: true);
+      _setShowLoader(false);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      if (e is ServerError) {
+        showToast(e.message['message'].toString());
+        _setShowLoader(false);
+        notifyListeners();
+        return false;
+      }
+    }
+    _setShowLoader(false);
+    notifyListeners();
+    return false;
+  }
 }

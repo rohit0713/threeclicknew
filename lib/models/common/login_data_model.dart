@@ -7,6 +7,14 @@ class LoginDataModel {
     response =
         json['response'] != null ? Response.fromJson(json['response']) : null;
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (response != null) {
+      data['response'] = response!.toJson();
+    }
+    return data;
+  }
 }
 
 class Response {
@@ -24,9 +32,20 @@ class Response {
     if (json['user'] != null) {
       user = <User>[];
       json['user'].forEach((v) {
-        user!.add(User.fromJson(v));
+        user!.add(new User.fromJson(v));
       });
     }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['status'] = status;
+    data['message'] = message;
+    data['token'] = token;
+    if (user != null) {
+      data['user'] = user!.map((v) => v.toJson()).toList();
+    }
+    return data;
   }
 }
 
@@ -62,5 +81,19 @@ class User {
     role = json['role'];
     referCode = json['refer_code'];
     userimage = json['userimage'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['contact_no'] = contactNo;
+    data['age'] = age;
+    data['gender'] = gender;
+    data['role'] = role;
+    data['refer_code'] = referCode;
+    data['userimage'] = userimage;
+    return data;
   }
 }

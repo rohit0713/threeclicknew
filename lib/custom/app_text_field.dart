@@ -30,16 +30,18 @@ class AppTextField extends StatelessWidget {
   final EdgeInsetsGeometry contentPadding;
   final String obscuringCharacter;
   final TextAlign textAlign;
+  final String? helperText;
   const AppTextField({
     super.key,
     this.labelText,
-    this.width = 0.4,
+    this.width = 1,
     this.iconData,
     this.controller,
     this.onTap,
     this.readOnly = false,
-    this.height,
+    this.height = 60,
     this.hintText,
+    this.helperText,
     this.onChanged,
     this.prefixIcon,
     this.leadingIcon,
@@ -98,9 +100,10 @@ class AppTextField extends StatelessWidget {
           prefix: leadingIcon,
           filled: readOnly,
           hintText: hintText,
+          helperText: helperText,
           suffixIcon: iconData,
           labelText: labelText == '' ? null : labelText,
-          contentPadding: contentPadding,
+          // contentPadding: contentPadding,
           alignLabelWithHint: true,
           labelStyle: const TextStyle(
               fontFamily: 'WorkSans',

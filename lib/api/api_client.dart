@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -26,12 +25,11 @@ class ApiClient {
 
     if (response.statusCode == 200) {
       // var data = ResponseModel.fromJson(jsonDecode(response.body));
-       return jsonDecode(response.body);
+      return jsonDecode(response.body);
     } else if (response.statusCode == 401) {
       // navigateRemoveUntil(context: context!, to: const Login());
     } else {
-      throw ServerError(
-          response.statusCode, jsonDecode(response.body)['response']['message']);
+      throw ServerError(response.statusCode, jsonDecode(response.body));
     }
   }
 
@@ -51,8 +49,7 @@ class ApiClient {
       debugPrint("data: ${response.body}");
 
       if (response.statusCode == 200) {
-        // var data = ResponseModel.fromJson(jsonDecode(response.body));
-        // return data;
+        return jsonDecode(response.body);
       } else if (response.statusCode == 401) {
         // navigateRemoveUntil(context: context, to: const Login());
       } else {
@@ -68,8 +65,8 @@ class ApiClient {
       {required BuildContext context,
       required String url,
       required List<File?>? file,
+      required List<String> fileKey,
       required Map<String, dynamic> body,
-      required String fName,
       Map<String, String>? headers}) async {
     debugPrint('Url: ${appUrls.baseUrl}$url');
 
@@ -79,10 +76,10 @@ class ApiClient {
         '${appUrls.baseUrl}$url',
       ),
     );
-    request.headers.addAll(headers!);
+    // request.headers.addAll(headers!);
     if (file != null) {
       for (int i = 0; i < file.length; i++) {
-        String fieldName = fName;
+        String fieldName = fileKey[i];
         String fileName = file[i]!.path.split('/').last;
         List<int> fileBytes = await file[i]!.readAsBytes();
         request.files.add(MultipartFile.fromBytes(
@@ -103,12 +100,11 @@ class ApiClient {
     debugPrint("data: $result");
 
     if (response.statusCode == 200) {
-      // var data = ResponseModel.fromJson(jsonDecode(result));
-      // return data;
+      return jsonDecode(result);
     } else if (response.statusCode == 401) {
       // navigateRemoveUntil(context: context, to: const Login());
     } else {
-      // throw ServerError(response.statusCode, jsonDecode(result)['errors']);
+      throw ServerError(response.statusCode, jsonDecode(result)['message']);
     }
   }
 }

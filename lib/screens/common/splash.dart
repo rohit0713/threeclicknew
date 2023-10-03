@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:threeclick/custom/navigation.dart';
 import 'package:threeclick/screens/common/welcome/welcome_screen.dart';
+import 'package:threeclick/styles/app_colors.dart';
 import 'dart:async';
 
 import 'package:threeclick/view_models/common/login_provider.dart';
@@ -26,6 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: kPrimaryColor,
       body: Container(
         height: size.height,
         margin: EdgeInsets.only(top: size.height * 0.005),
@@ -53,15 +55,15 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   startTime() async {
-    return new Timer(Duration(milliseconds: 3000), NavigatorPage);
+    return Timer(const Duration(milliseconds: 3000), NavigatorPage);
   }
 
   Future<void> NavigatorPage() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var provider=LoginProvider(await SharedPreferences.getInstance());
-    bool isLogging = prefs.getBool("isLogging")??false;
+    var provider = LoginProvider(await SharedPreferences.getInstance());
+    bool isLogging = prefs.getBool("isLogging") ?? false;
     String? role = prefs.getString("role")?.toLowerCase();
-    if (provider.isUserLoggedIn) {
+    if (!provider.isUserLoggedIn) {
       navigateReplaceMent(context: context, to: const WelcomeScreen());
       // Navigator.pushReplacement(
 

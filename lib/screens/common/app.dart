@@ -21,11 +21,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter UI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
         textTheme: AppTheme.textTheme,
-        platform: TargetPlatform.iOS,
       ),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
