@@ -45,15 +45,6 @@ class _EmployerHomePageState extends State<EmployerHomePage> {
     });
   }
 
-  List datalist = [
-    ["", "", ""],
-    ["Plumber", "25", "Click here to view more..."],
-    ["sales Boy/Girl", "7", "Click here to view more..."],
-    ["Driver", "3", "Click here to view more..."],
-    ["Flutter Developer", "15", "Click here to view more..."],
-    ["iOS Developer", "4", "Click here to view more..."],
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

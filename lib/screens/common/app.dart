@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
     return MaterialApp(
-      title: 'Flutter UI',
+      title: '3 Click',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: AppTheme.textTheme,
